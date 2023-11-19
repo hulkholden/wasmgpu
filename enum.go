@@ -439,3 +439,18 @@ func (g GPUStorageTextureAccess) ToJS() any {
 const (
 	GPUStorageTextureAccessWriteOnly GPUStorageTextureAccess = "write-only"
 )
+
+// GPUMapModeFlags as described:
+// https://gpuweb.github.io/gpuweb/#typedefdef-gpumapmodeflags
+type GPUMapModeFlags GPUFlagsConstant
+
+// ToJS converts this type to one that can be passed as an argument
+// to JavaScript.
+func (g GPUMapModeFlags) ToJS() any {
+	return uint32(g)
+}
+
+const (
+	GPUMapModeFlagsRead  GPUMapModeFlags = 0x0001
+	GPUMapModeFlagsWrite GPUMapModeFlags = 0x0002
+)
