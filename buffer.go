@@ -65,6 +65,12 @@ func (g GPUBuffer) GetMappedRange(offset, size GPUSize64) js.Value {
 	return g.jsValue.Call("getMappedRange", params...)
 }
 
+// Unmap as described:
+// https://gpuweb.github.io/gpuweb/#dom-gpubuffer-unmap
+func (g GPUBuffer) Unmap() {
+	g.jsValue.Call("unmap")
+}
+
 // Destroy as described:
 // https://gpuweb.github.io/gpuweb/#dom-gpubuffer-destroy
 func (g GPUBuffer) Destroy() {
