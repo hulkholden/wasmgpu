@@ -7,6 +7,10 @@ import (
 )
 
 var (
+	objectCtor      = js.Global().Get("Object")
+	arrayBufferCtor = js.Global().Get("ArrayBuffer")
+	uint8ArrayCtor  = js.Global().Get("Uint8Array")
+
 	// NOTE: We use a global ArrayBuffer and a few TypedArray views on top
 	// of it for WebGPU calls that require such instead of allocating new ones
 	// for each call.
@@ -31,8 +35,8 @@ func ensureBufferSize(size int) {
 		bufferSize *= 2
 	}
 
-	arrayBuffer = js.Global().Get("ArrayBuffer").New(bufferSize)
-	uint8Array = js.Global().Get("Uint8Array").New(arrayBuffer)
+	arrayBuffer = arrayBufferCtor.New(bufferSize)
+	uint8Array = uint8ArrayCtor.New(arrayBuffer)
 }
 
 // DataTypes represents allowed data slice types.
