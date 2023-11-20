@@ -1,6 +1,7 @@
 package wasmgpu
 
 import (
+	"fmt"
 	"syscall/js"
 
 	"github.com/mokiat/gog/opt"
@@ -62,7 +63,14 @@ type GPUProgrammableStageConstants map[any]any
 func (g GPUProgrammableStageConstants) ToJS() any {
 	o := objectCtor.New()
 	for k, v := range g {
-		o.Set(k, v)
+		switch kt := k.(type) {
+		case string:
+			o.Set(kt, v)
+		case int:
+			o.SetIndex(kt, v)
+		default:
+			panic(fmt.Sprintf("unhandled key type %T", k))
+		}
 	}
 	return o
 }
