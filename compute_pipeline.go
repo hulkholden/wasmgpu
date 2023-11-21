@@ -37,3 +37,13 @@ type GPUComputePipeline struct {
 func (g GPUComputePipeline) ToJS() any {
 	return g.jsValue
 }
+
+// GetBindGroupLayout as described:
+// https://gpuweb.github.io/gpuweb/#dom-gpupipelinebase-getbindgrouplayout
+func (g GPUComputePipeline) GetBindGroupLayout(index uint32) GPUBindGroupLayout {
+	params := make([]any, 1)
+	params[0] = index
+	return GPUBindGroupLayout{
+		jsValue: g.jsValue.Call("getBindGroupLayout", params...),
+	}
+}
