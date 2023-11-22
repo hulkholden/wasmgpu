@@ -1,21 +1,30 @@
 package wasmgpu
 
-import "syscall/js"
+import (
+	"syscall/js"
+
+	"github.com/mokiat/gog/opt"
+)
 
 // GPUBufferDescriptor as described:
 // https://gpuweb.github.io/gpuweb/#gpubufferdescriptor
 type GPUBufferDescriptor struct {
-	Size  GPUSize64
-	Usage GPUBufferUsageFlags
+	Size             GPUSize64
+	Usage            GPUBufferUsageFlags
+	MappedAtCreation opt.T[bool]
 }
 
 // ToJS converts this type to one that can be passed as an argument
 // to JavaScript.
 func (g GPUBufferDescriptor) ToJS() any {
-	return map[string]any{
+	result := map[string]any{
 		"size":  g.Size.ToJS(),
 		"usage": g.Usage.ToJS(),
 	}
+	if g.MappedAtCreation.Specified {
+		result["mappedAtCreation"] = g.MappedAtCreation.Value
+	}
+	return result
 }
 
 // GPUBuffer as described:
